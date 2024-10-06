@@ -3,9 +3,9 @@
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/go-zoox/http-proxy)](https://pkg.go.dev/github.com/go-zoox/http-proxy)
 [![Build Status](https://github.com/go-zoox/http-proxy/actions/workflows/lint.yml/badge.svg?branch=master)](https://github.com/go-zoox/http-proxy/actions/workflows/lint.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/go-zoox/http-proxy)](https://goreportcard.com/report/github.com/go-zoox/http-proxy)
-[![Coverage Status](https://coveralls.io/repos/github/go-zoox/proxy/badge.svg?branch=master)](https://coveralls.io/github/go-zoox/proxy?branch=master)
-[![GitHub issues](https://img.shields.io/github/issues/go-zoox/proxy.svg)](https://github.com/go-zoox/http-proxy/issues)
-[![Release](https://img.shields.io/github/tag/go-zoox/proxy.svg?label=Release)](https://github.com/go-zoox/http-proxy/tags)
+[![Coverage Status](https://coveralls.io/repos/github/go-zoox/http-proxy/badge.svg?branch=master)](https://coveralls.io/github/go-zoox/http-proxy?branch=master)
+[![GitHub issues](https://img.shields.io/github/issues/go-zoox/http-proxy.svg)](https://github.com/go-zoox/http-proxy/issues)
+[![Release](https://img.shields.io/github/tag/go-zoox/http-proxy.svg?label=Release)](https://github.com/go-zoox/http-proxy/tags)
 
 
 ## Installation
