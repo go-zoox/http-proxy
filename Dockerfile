@@ -1,5 +1,5 @@
 # Builder
-FROM whatwewant/builder-go:v1.22-1 as builder
+FROM --platform=$BUILDPLATFORM whatwewant/builder-go:v1.22-1 as builder
 
 WORKDIR /build
 
@@ -9,9 +9,15 @@ COPY go.sum ./
 
 RUN go mod download
 
+ARG TARGETOS
+
+ARG TARGETARCH
+
 COPY . .
 
 RUN CGO_ENABLED=0 \
+  GOOS=$TARGETOS \
+  GOARCH=$TARGETARCH \
   go build \
   -trimpath \
   -ldflags '-w -s -buildid=' \
