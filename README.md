@@ -1,4 +1,4 @@
-# Proxy - Make Reverse Proxy easier to use
+# HTTP Proxy - Light HTTP Proxy Server
 
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/go-zoox/http-proxy)](https://pkg.go.dev/github.com/go-zoox/http-proxy)
 [![Build Status](https://github.com/go-zoox/http-proxy/actions/workflows/lint.yml/badge.svg?branch=master)](https://github.com/go-zoox/http-proxy/actions/workflows/lint.yml)
@@ -27,118 +27,16 @@ import (
 )
 
 func main() {
-	fmt.Println("Starting proxy at http://127.0.0.1:9999 ...")
+	fmt.Println("Starting proxy at http://127.0.0.1:1080 ...")
 
-	http.ListenAndServe(":9999", proxy.New(&proxy.Config{
-		OnRequest: func(req *http.Request) error {
-			req.URL.Host = "127.0.0.1:8080"
-			return nil
-		},
-	}))
+	http.ListenAndServe(":1080", httpproxy.New())
 }
 
-// visit http://127.0.0.1:9999/ip => http://127.0.0.1:8080/ip
-// curl -v http://127.0.0.1:9999/ip
-```
-
-## Best Practice
-
-### 1. Single Host => All traffic to a single target with path
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-
-	"github.com/go-zoox/http-proxy"
-)
-
-func main() {
-	target := "https://httpbin.org"
-
-	fmt.Println("Starting proxy at http://127.0.0.1:9999 ...")
-	http.ListenAndServe(":9999", proxy.NewSingleHost(target))
-}
-```
-
-### 2. Single Host => All traffic to a single target with rewrite
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-
-	"github.com/go-zoox/http-proxy"
-	"github.com/go-zoox/http-proxy/utils/rewriter"
-)
-
-func main() {
-	target := "https://httpbin.org"
-
-	fmt.Println("Starting proxy at http://127.0.0.1:9999 ...")
-	http.ListenAndServe(":9999", proxy.NewSingleHost(target, &proxy.SingleHostConfig{
-		Rewrites: rewriter.Rewriters{
-			{
-				From: "/api/ip",
-				To:   "/ip",
-			},
-			{
-				From: "/api/headers",
-				To:   "/headers",
-			},
-			{
-				From: "/api/v2/(.*)",
-				To:   "/$1",
-			},
-		},
-	}))
-}
-```
-
-### 3. Multiple Hosts => All traffic to multiple targets
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-
-	"github.com/go-zoox/http-proxy"
-)
-
-func main() {
-	fmt.Println("Starting proxy at http://127.0.0.1:9999 ...")
-	
-	http.ListenAndServe(":9999", proxy.NewMultiHosts(&proxy.MultiHostsConfig{
-		Routes: []proxy.MultiHostsRoute{
-			{
-				Host: "httpbin1.go-zoox.work",
-				Backend: proxy.MultiHostsRouteBackend{
-					ServiceProtocol: "https",
-					ServiceName:     "httpbin.zcorky.com",
-					ServicePort:     443,
-				},
-			},
-			{
-				Host: "httpbin2.go-zoox.work",
-				Backend: proxy.MultiHostsRouteBackend{
-					ServiceProtocol: "https",
-					ServiceName:     "httpbin.org",
-					ServicePort:     443,
-				},
-			},
-		},
-	}))
-}
+// curl --proxy http://127.0.0.1:1080 http://httpbin.org
 ```
 
 ## Inspiration
-* Go httputil.ReverseProxy
+* https://medium.com/@mlowicki/http-s-proxy-in-golang-in-less-than-100-lines-of-code-6a51c2f2c38c
 
 ## License
 GoZoox is released under the [MIT License](./LICENSE).
